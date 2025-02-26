@@ -119,6 +119,7 @@ public class ManagementCompany {
                 if (!verifyDepartment(department.getCode()) || newDepartment.getCode() == department.getCode()) {
                     department.setName(department.getName());
                     department.setCode(newDepartment.getCode());
+                    department.setManagerAssociated(department.getManagerAssociated());
                     break;
                 }
             }
@@ -131,98 +132,11 @@ public class ManagementCompany {
      */
     public void deleteDepartment(int code) {
         for (Department department : departmentsList) {
-            if (department.getCode() == code && department.getEmployeesList().isEmpty()) {
+            if (department.getCode() == code && department.getTechniciansList().isEmpty()
+                    && department.getManagerAssociated() == null) {
                 departmentsList.remove(department);
                 break;
             }
         }
-    }
-
-    /**
-     * Method to assign an employee to the employeesList
-     * @param employee Employee to create
-     */
-    public void createEmployee(Employee employee) {
-        if (!verifyEmployee(employee.getId())){
-            employeesList.add(employee);
-            assignDepartmentEmployee(employee);
-        }
-    }
-
-    /**
-     * Method to verify if exists an employee with the same id as one given
-     * @param id ID to verify
-     * @return Boolean if the employee was found or not
-     */
-    public boolean verifyEmployee(String id) {
-        boolean found = false;
-        for (Employee employee : employeesList) {
-            if (employee.getId().equals(id)) {
-                found = true;
-                break;
-            }
-        }
-        return found;
-    }
-
-    /**
-     * Method to update an employee's information
-     * @param id ID of the employee to update
-     * @param newEmployee Employee with the new information
-     */
-    public void updateEmployee(String id, Employee newEmployee) {
-        for (Employee employee : employeesList) {
-            if (employee.getId().equals(id)) {
-                if (!verifyEmployee(employee.getId()) || newEmployee.getId().equals(employee.getId())) {
-                    employee.setName(newEmployee.getName());
-                    employee.setId(newEmployee.getId());
-                    updateDepartmentEmployee(employee, newEmployee);
-                    break;
-                }
-            }
-        }
-    }
-
-    /**
-     * Method to delete an employee from the employeesList
-     * @param id ID of the employee to delete
-     */
-    public void deleteEmployee(String id) {
-        for (Employee employee : employeesList) {
-            if (employee.getId().equals(id)) {
-                employeesList.remove(employee);
-                disassociateDepartmentEmployee(employee);
-                break;
-            }
-        }
-    }
-
-    /**
-     * Method to update an employee department
-     * @param oldEmployee oldEmployee who we want to change its department
-     * @param newEmployee newEmployee with the new department
-     */
-    public void updateDepartmentEmployee(Employee oldEmployee, Employee newEmployee) {
-        if (oldEmployee.getassociatedDepartment().getCode() != newEmployee.getassociatedDepartment().getCode()) {
-            disassociateDepartmentEmployee(oldEmployee);
-            oldEmployee.setAssociatedDepartment(newEmployee.getassociatedDepartment());
-            assignDepartmentEmployee(oldEmployee);
-        }
-    }
-
-    /**
-     * Method to assign an employee from a department
-     * @param employee Employee to assign
-     */
-    public void assignDepartmentEmployee(Employee employee) {
-        employee.getassociatedDepartment().getEmployeesList().add(employee);
-    }
-
-    /**
-     * Method to disassociate an employee from a department
-     * @param employee Employee to disassociate
-     */
-    public void disassociateDepartmentEmployee(Employee employee) {
-        employee.getassociatedDepartment().getEmployeesList().remove(employee);
     }
 }

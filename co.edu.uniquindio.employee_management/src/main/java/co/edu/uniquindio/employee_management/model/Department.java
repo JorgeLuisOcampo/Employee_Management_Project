@@ -5,17 +5,20 @@ import java.util.LinkedList;
 public class Department {
     private String name;
     private int code;
-    private LinkedList<Employee> employeesList;
+    private Manager managerAssociated;
+    private LinkedList<Technician> techniciansList;
 
     /**
      * Method constructor for the class Department
      * @param name Name of the department to create
      * @param code Code of the department to create
+     * @param managerAssociated Manager of the department to create
      */
-    public Department(String name, int code) {
+    public Department(String name, int code, Manager managerAssociated) {
         this.name = name;
         this.code = code;
-        this.employeesList = new LinkedList<>();
+        this.managerAssociated = managerAssociated;
+        this.techniciansList = new LinkedList<>();
     }
 
     /**
@@ -51,18 +54,34 @@ public class Department {
     }
 
     /**
-     * Method to obtain the list of employees in the department
-     * @return List of employees in the department
+     * Method to obtain the department's manager associated
+     * @return Department's manager associated
      */
-    public LinkedList<Employee> getEmployeesList() {
-        return employeesList;
+    public Manager getManagerAssociated() {
+        return managerAssociated;
     }
 
     /**
-     * Method to modify the list of employees in the department
-     * @param employeesList New list of employees
+     * Method to modify the department's manager associated
+     * @param managerAssociated New manager of the department
      */
-    public void setEmployeesList(LinkedList<Employee> employeesList) {
-        this.employeesList = employeesList;
+    public void setManagerAssociated(Manager managerAssociated) {
+        this.managerAssociated = managerAssociated;
+    }
+
+    /**
+     * Method to obtain the department's technicians list
+     * @return Department's technicians list
+     */
+    public LinkedList<Technician> getTechniciansList() {
+        return techniciansList;
+    }
+
+    /**
+     * Method to modify the department's technicians list
+     * @param techniciansList New technicians list of the department
+     */
+    public void setTechniciansList(LinkedList<Technician> techniciansList) {
+        this.techniciansList = techniciansList;
     }
 }

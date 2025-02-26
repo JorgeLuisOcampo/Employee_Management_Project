@@ -1,6 +1,9 @@
 package co.edu.uniquindio.employee_management.model;
 
-public class Manager extends  Employee{
+import co.edu.uniquindio.employee_management.services.IContributor;
+import co.edu.uniquindio.employee_management.services.IManageTechnician;
+
+public class Manager extends Employee implements IManageTechnician{
     private int numberCurrentProjects;
     private int numberCompletedProjects;
 
@@ -48,16 +51,38 @@ public class Manager extends  Employee{
         this.numberCompletedProjects = numberCompletedProjects;
     }
 
+    /**
+     * Method to change the number of the current projects
+     * @param numberApply Number to apply
+     */
     public void changeNumberCurrentProjects(int numberApply) {
         numberCurrentProjects += numberApply;
     }
 
+    /**
+     * Method to change the number of the completed projects
+     * @param numberApply Number to apply
+     */
     public void changeNumberCompletedProjects(int numberApply) {
         numberCompletedProjects += numberApply;
     }
 
-    public void createProject() {
+    /**
+     * Method to assign a technician to a department
+     * @param technician Technician to assign
+     */
+    @Override
+    public void assignDepartmentTechnician(Technician technician) {
+        super.getassociatedDepartment().getTechniciansList().add(technician);
+    }
 
+    /**
+     * Method to disassociate a technician to a department
+     * @param technician Technician to disassociate
+     */
+    @Override
+    public void disassociateDepartmentTechnician(Technician technician) {
+        super.getassociatedDepartment().getTechniciansList().remove(technician);
     }
 
     /**

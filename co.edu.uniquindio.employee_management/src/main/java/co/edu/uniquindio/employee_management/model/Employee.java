@@ -1,14 +1,11 @@
 package co.edu.uniquindio.employee_management.model;
-
 import co.edu.uniquindio.employee_management.services.IContributor;
-
-import java.util.LinkedList;
 
 public abstract class Employee implements IContributor {
     private String name;
     private String id;
     private Department associatedDepartment;
-    private LinkedList<Project> associatedProjectsList;
+    private Project associatedProject;
 
     /**
      * Method constructor for the class Employee
@@ -20,7 +17,6 @@ public abstract class Employee implements IContributor {
         this.name = name;
         this.id = id;
         this.associatedDepartment = department;
-        this.associatedProjectsList = new LinkedList<>();
     }
 
     /**
@@ -72,18 +68,18 @@ public abstract class Employee implements IContributor {
     }
 
     /**
-     * Method to obtain the list of projects associated with the employee
-     * @return List of projects associated with the employee
+     * Method to obtain the employee's associated project
+     * @return Employee's associated project
      */
-    public LinkedList<Project> getAssociatedProjectsList() {
-        return associatedProjectsList;
+    public Project getAssociatedProject() {
+        return associatedProject;
     }
 
     /**
-     * Method to modify the list of projects associated with the employee
-     * @param associatedProjectsList New list of projects associated with the employee
+     * Method to modify the employee's associated project
+     * @param associatedProject New associated project of the employee
      */
-    public void setAssociatedProjectsList(LinkedList<Project> associatedProjectsList) {
-        this.associatedProjectsList = associatedProjectsList;
+    public void setAssociatedProject(Project associatedProject) {
+        this.associatedProject = associatedProject;
     }
 }
