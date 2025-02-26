@@ -5,22 +5,21 @@ import java.util.LinkedList;
 public class Project {
     private String name;
     private int code;
-    private Manager associatedManager;
     private boolean completed;
-    private LinkedList<Technician> techniciansList;
+    private LinkedList<Employee> assignedEmployeesList;
+    private LinkedList<Department> departmentsList;
 
     /**
      * Method constructor for the class Project
      * @param name Name of the project to create
      * @param code Code of the project to create
-     * @param associatedManager Manager associated with the project
      */
-    public Project(String name, int code, Manager associatedManager) {
+    public Project(String name, int code) {
         this.name = name;
         this.code = code;
-        this.associatedManager = associatedManager;
         this.completed = false;
-        this.techniciansList = new LinkedList<>();
+        this.assignedEmployeesList = new LinkedList<>();
+        this.departmentsList = new LinkedList<>();
     }
 
     /**
@@ -56,22 +55,6 @@ public class Project {
     }
 
     /**
-     * Method to obtain the manager associated with the project
-     * @return Associated manager of the project
-     */
-    public Manager getAssociatedManager() {
-        return associatedManager;
-    }
-
-    /**
-     * Method to modify the manager associated with the project
-     * @param associatedManager New manager associated with the project
-     */
-    public void setAssociatedManager(Manager associatedManager) {
-        this.associatedManager = associatedManager;
-    }
-
-    /**
      * Method to check if the project is completed
      * @return True if the project is completed, otherwise false
      */
@@ -88,18 +71,34 @@ public class Project {
     }
 
     /**
-     * Method to obtain the list of technicians assigned to the project
-     * @return List of technicians assigned to the project
+     * Method to obtain the project's assigned employees list
+     * @return Project's assigned employees list
      */
-    public LinkedList<Technician> getTechniciansList() {
-        return techniciansList;
+    public LinkedList<Employee> getAssignedEmployeesList() {
+        return assignedEmployeesList;
     }
 
     /**
-     * Method to modify the list of technicians assigned to the project
-     * @param techniciansList New list of technicians assigned to the project
+     * Method to modify the project's assigned employees list
+     * @param assignedEmployeesList New assigned employees list of the project
      */
-    public void setTechniciansList(LinkedList<Technician> techniciansList) {
-        this.techniciansList = techniciansList;
+    public void setAssignedEmployeesList(LinkedList<Employee> assignedEmployeesList) {
+        this.assignedEmployeesList = assignedEmployeesList;
+    }
+
+    /**
+     * Method to obtain the project's departments list
+     * @return Project's departments list
+     */
+    public LinkedList<Department> getDepartmentsList() {
+        return departmentsList;
+    }
+
+    /**
+     * Method to modify the project's departments list
+     * @param departmentsList New departments list of the project
+     */
+    public void setDepartmentsList(LinkedList<Department> departmentsList) {
+        this.departmentsList = departmentsList;
     }
 }
