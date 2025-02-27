@@ -5,6 +5,7 @@ import java.util.LinkedList;
 public class Department {
     private String name;
     private int code;
+    private Project associatedProject;
     private Manager managerAssociated;
     private LinkedList<Technician> techniciansList;
 
@@ -12,12 +13,10 @@ public class Department {
      * Method constructor for the class Department
      * @param name Name of the department to create
      * @param code Code of the department to create
-     * @param managerAssociated Manager of the department to create
      */
-    public Department(String name, int code, Manager managerAssociated) {
+    public Department(String name, int code) {
         this.name = name;
         this.code = code;
-        this.managerAssociated = managerAssociated;
         this.techniciansList = new LinkedList<>();
     }
 
@@ -51,6 +50,22 @@ public class Department {
      */
     public void setCode(int code) {
         this.code = code;
+    }
+
+    /**
+     * Method to obtain the department's associated project
+     * @return Department's associated project
+     */
+    public Project getAssociatedProject() {
+        return associatedProject;
+    }
+
+    /**
+     * Method to modify the department's associated project
+     * @param associatedProject The new associated project of the department
+     */
+    public void setAssociatedProject(Project associatedProject) {
+        this.associatedProject = associatedProject;
     }
 
     /**
