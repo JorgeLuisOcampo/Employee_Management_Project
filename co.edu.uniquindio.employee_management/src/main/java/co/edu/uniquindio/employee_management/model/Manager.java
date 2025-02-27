@@ -3,8 +3,7 @@ package co.edu.uniquindio.employee_management.model;
 import co.edu.uniquindio.employee_management.services.IContributor;
 import co.edu.uniquindio.employee_management.services.IManageTechnician;
 
-public class Manager extends Employee implements IManageTechnician{
-    private int numberCurrentProjects;
+public class Manager extends Employee implements IManageTechnician {
     private int numberCompletedProjects;
 
     /**
@@ -15,24 +14,7 @@ public class Manager extends Employee implements IManageTechnician{
      */
     public Manager(String name, String id, Department department) {
         super(name, id, department);
-        numberCurrentProjects = 0;
         numberCompletedProjects = 0;
-    }
-
-    /**
-     * Method to obtain the number of current projects managed by the manager
-     * @return Number of current projects
-     */
-    public int getNumberCurrentProjects() {
-        return numberCurrentProjects;
-    }
-
-    /**
-     * Method to modify the number of current projects managed by the manager
-     * @param numberCurrentProjects New number of current projects
-     */
-    public void setNumberCurrentProjects(int numberCurrentProjects) {
-        this.numberCurrentProjects = numberCurrentProjects;
     }
 
     /**
@@ -52,37 +34,11 @@ public class Manager extends Employee implements IManageTechnician{
     }
 
     /**
-     * Method to change the number of the current projects
-     * @param numberApply Number to apply
-     */
-    public void changeNumberCurrentProjects(int numberApply) {
-        numberCurrentProjects += numberApply;
-    }
-
-    /**
      * Method to change the number of the completed projects
      * @param numberApply Number to apply
      */
     public void changeNumberCompletedProjects(int numberApply) {
-        numberCompletedProjects += numberApply;
-    }
-
-    /**
-     * Method to assign a technician to a department
-     * @param technician Technician to assign
-     */
-    @Override
-    public void assignDepartmentTechnician(Technician technician) {
-        super.getassociatedDepartment().getTechniciansList().add(technician);
-    }
-
-    /**
-     * Method to disassociate a technician to a department
-     * @param technician Technician to disassociate
-     */
-    @Override
-    public void disassociateDepartmentTechnician(Technician technician) {
-        super.getassociatedDepartment().getTechniciansList().remove(technician);
+        this.numberCompletedProjects += numberApply;
     }
 
     /**
@@ -91,5 +47,43 @@ public class Manager extends Employee implements IManageTechnician{
     @Override
     public void contribute() {
         System.out.println("Contribute to Manager");
+    }
+
+    /**
+     * Method to associate a technician to a project
+     * @param code Code of the project
+     * @param id ID of the technician
+     */
+    @Override
+    public void associateProjectTechnician(int code, String id) {
+        if (code != getAssociatedProject().getCode() || getAssociatedProject().isCompleted()) {
+            return;
+        }
+        for (Technician technician : super.getassociatedDepartment().getTechniciansList()) {
+            if (technician.getId().equals(id)) {
+                getAssociatedProject().getAssignedEmployeesList().add(technician);
+                technician.setAssociatedProject(getAssociatedProject());
+                return;
+            }
+        }
+    }
+
+    /**
+     * Method to disassociate a technician to a project
+     * @param code Code of the project
+     * @param id ID of the technician
+     */
+    @Override
+    public void disassociateProjectTechnician(int code, String id) {
+        if (code != getAssociatedProject().getCode() || getAssociatedProject().isCompleted()) {
+            return;
+        }
+        for (Technician technician : super.getassociatedDepartment().getTechniciansList()) {
+            if (technician.getId().equals(id)) {
+                getAssociatedProject().getAssignedEmployeesList().remove(technician);
+                technician.setAssociatedProject(null);
+                return;
+            }
+        }
     }
 }
