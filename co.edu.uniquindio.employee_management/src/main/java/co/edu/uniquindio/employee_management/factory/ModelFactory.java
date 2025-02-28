@@ -1,19 +1,25 @@
 package co.edu.uniquindio.employee_management.factory;
 
-import co.edu.uniquindio.employee_management.model.Department;
-import co.edu.uniquindio.employee_management.model.ManagementCompany;
-import co.edu.uniquindio.employee_management.model.Manager;
-import co.edu.uniquindio.employee_management.model.Technician;
+import co.edu.uniquindio.employee_management.model.*;
+
+import java.util.LinkedList;
 
 public class ModelFactory {
 
     private static ModelFactory modelFactory;
     private static ManagementCompany managementCompany;
 
+    /**
+     * Method constructor of the class ModelFactory
+     */
     private ModelFactory() {
         initializeData();
     }
 
+    /**
+     * Method to get the only model factory instance
+     * @return The only model factory instance
+     */
     public static ModelFactory getInstance() {
         if (modelFactory == null) {
             modelFactory = new ModelFactory();
@@ -21,6 +27,17 @@ public class ModelFactory {
         return modelFactory;
     }
 
+    /**
+     * Method to get the only management company instance
+     * @return The only management company instance
+     */
+    public ManagementCompany getManagementCompany() {
+        return managementCompany;
+    }
+
+    /**
+     * Method to initialize data in the management company
+     */
     public static void initializeData() {
         managementCompany = new ManagementCompany("UQ Software");
         Department department = new Department("Bloque 1", 1);
@@ -35,7 +52,59 @@ public class ModelFactory {
         managementCompany.addEmployee(manager);
     }
 
-    public ManagementCompany getManagementCompany() {
-        return managementCompany;
+    public void createDepartment(Department department){
+        managementCompany.createDepartment(department);
+    }
+
+    public void updateDepartment(int code, Department newDepartment){
+        managementCompany.updateDepartment(code, newDepartment);
+    }
+
+    public void deleteDepartment(int code){
+        managementCompany.deleteDepartment(code);
+    }
+
+    public void addEmployee(Employee employee){
+        managementCompany.addEmployee(employee);
+    }
+
+    public void deleteEmployee(String id){
+        managementCompany.deleteEmployee(id);
+    }
+
+    public void updateEmployee(String id, Employee newEmployee){
+        managementCompany.updateEmployee(id, newEmployee);
+    }
+
+    public void createProject(Project project){
+        managementCompany.createProject(project);
+    }
+
+    public void updateProject(int code, Project project){
+        managementCompany.updateProject(code, project);
+    }
+
+    public void deleteProject(int code){
+        managementCompany.deleteProject(code);
+    }
+
+    public void associateProjectDepartment(Project project, Department department){
+        managementCompany.associateProjectDepartment(project, department);
+    }
+
+    public void disassociateProjectDepartment(Project project, int code){
+        managementCompany.disassociateProjectDepartment(project, code);
+    }
+
+    public void completeProject(Project project){
+        managementCompany.completeProject(project);
+    }
+
+    public void associateProjectTechnician(int code, String id){
+        managementCompany.associateProjectTechnician(code, id);
+    }
+
+    public void disassociateProjectTechnician(int code, String id){
+        managementCompany.disassociateProjectTechnician(code, id);
     }
 }
