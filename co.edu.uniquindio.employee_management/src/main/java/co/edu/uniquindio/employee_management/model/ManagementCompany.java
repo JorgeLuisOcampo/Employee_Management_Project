@@ -13,6 +13,7 @@ public class ManagementCompany implements IManageTechnician {
 
     /**
      * Method constructor for the class ManagementCompany
+     *
      * @param name Name of the management company to create
      */
     public ManagementCompany(String name) {
@@ -25,6 +26,7 @@ public class ManagementCompany implements IManageTechnician {
 
     /**
      * Method to obtain the management company's name
+     *
      * @return Management company's name
      */
     public String getName() {
@@ -33,6 +35,7 @@ public class ManagementCompany implements IManageTechnician {
 
     /**
      * Method to modify the management company's name
+     *
      * @param name New name of the management company
      */
     public void setName(String name) {
@@ -41,6 +44,7 @@ public class ManagementCompany implements IManageTechnician {
 
     /**
      * Method to obtain the list of departments in the management company
+     *
      * @return List of departments in the management company
      */
     public LinkedList<Department> getDepartmentsList() {
@@ -49,6 +53,7 @@ public class ManagementCompany implements IManageTechnician {
 
     /**
      * Method to modify the list of departments in the management company
+     *
      * @param departmentsList New list of departments
      */
     public void setDepartmentsList(LinkedList<Department> departmentsList) {
@@ -105,7 +110,7 @@ public class ManagementCompany implements IManageTechnician {
     public boolean verifyDepartment(int code) {
         boolean found = false;
         for (Department department : departmentsList) {
-            if (department.getCode() == code){
+            if (department.getCode() == code) {
                 found = true;
                 break;
             }
@@ -120,7 +125,7 @@ public class ManagementCompany implements IManageTechnician {
      */
     public void updateDepartment(int code, Department newDepartment) {
         for (Department department : departmentsList) {
-            if (department.getCode() == code){
+            if (department.getCode() == code) {
                 if (!verifyDepartment(department.getCode()) || newDepartment.getCode() == department.getCode()) {
                     department.setName(department.getName());
                     department.setCode(newDepartment.getCode());
@@ -144,6 +149,10 @@ public class ManagementCompany implements IManageTechnician {
         }
     }
 
+    /**
+     * Method to add an employee to the technicians list or managers list
+     * @param employee Employee to add
+     */
     public void addEmployee(Employee employee) {
         if (verifyEmployee(employee.getId())){
             return;
@@ -156,6 +165,11 @@ public class ManagementCompany implements IManageTechnician {
         }
     }
 
+    /**
+     * Method to verify if exists one employee in the management company with the same ID as one given
+     * @param id ID given to find
+     * @return Boolean about if the employee was found or not
+     */
     public boolean verifyEmployee(String id) {
         for (Technician technician : techniciansList) {
             if (technician.getId().equals(id)) {
@@ -170,6 +184,10 @@ public class ManagementCompany implements IManageTechnician {
         return false;
     }
 
+    /**
+     * Method to add a manager to the managersList and assign it to its department
+     * @param manager Manager to add
+     */
     public void addManager(Manager manager) {
         Department department = manager.getassociatedDepartment();
         if (department != null && department.getManagerAssociated() == null) {
@@ -178,13 +196,22 @@ public class ManagementCompany implements IManageTechnician {
         }
     }
 
+    /**
+     * Method to add a technician to the techniciansList and assign it to its department
+     * @param technician Technician to add
+     */
     public void addTechnician(Technician technician) {
         if (technician.getassociatedDepartment() != null){
             techniciansList.add(technician);
+            technician.getassociatedDepartment().getTechniciansList().add(technician);
         }
     }
 
-    public void deleteManager(String id) {
+    /**
+     * Method to delete an employee from the managers list or technicians list
+     * @param id ID of the employee to delete
+     */
+    public void deleteEmployee(String id) {
         for (Manager manager : managerList) {
             if (manager.getId().equals(id)) {
                 managerList.remove(manager);
@@ -201,6 +228,11 @@ public class ManagementCompany implements IManageTechnician {
         }
     }
 
+    /**
+     * Method to update an employee's information
+     * @param id ID of the employee to update information
+     * @param newEmployee Employee with the new information
+     */
     public void updateEmployee(String id, Employee newEmployee) {
         if (verifyEmployee(id) || !newEmployee.getId().equals(id)) {
             return;
@@ -221,6 +253,10 @@ public class ManagementCompany implements IManageTechnician {
         }
     }
 
+    /**
+     * Method to add a project to the projects list
+     * @param project Project to add
+     */
     public void createProject(Project project) {
         if (!verifyProjects(project.getCode())){
             projectsList.add(project);
@@ -228,6 +264,11 @@ public class ManagementCompany implements IManageTechnician {
         }
     }
 
+    /**
+     * Method to verify if exists a project with the same code as one given
+     * @param code Code given to verify
+     * @return Boolean if the project was found or not
+     */
     public boolean verifyProjects(int code) {
         for (Project project : projectsList) {
             if (project.getCode() == code) {
@@ -237,38 +278,62 @@ public class ManagementCompany implements IManageTechnician {
         return false;
     }
 
-    public void updateProject(Project project) {
-        for (Project projectCheck : projectsList){
-            if (projectCheck.getCode() == project.getCode() ||
-                    !verifyProjects(project.getCode())){
-                projectCheck.setCode(project.getCode());
-                projectCheck.setName(project.getName());
+    /**
+     * Method to update a project's information
+     * @param code Code of the project to update information
+     * @param newProject Project with the new information
+     */
+    public void updateProject(int code, Project newProject) {
+        if (verifyProjects(code) || !(newProject.getCode() == code)) {
+            return;
+        }
+        for (Project project : projectsList){
+            if (project.getCode() == code){
+                project.setCode(newProject.getCode());
+                project.setName(newProject.getName());
             }
         }
     }
 
+    /**
+     * Method to delete a project from the projects list and disassociate everything from it
+     * @param code Code of the project to delete
+     */
     public void deleteProject(int code) {
         for (Project project : projectsList) {
             if (project.getCode() == code && !project.isCompleted()) {
-                dissacociateDepartmentsProject(project.getDepartmentsList());
-                dissacociateEmployeesProject(project.getAssignedEmployeesList());
+                disassociateDepartmentsProject(project.getDepartmentsList());
+                disassociateEmployeesProject(project.getAssignedEmployeesList());
                 return;
             }
         }
     }
 
-    public void dissacociateDepartmentsProject(LinkedList<Department> departmentsList) {
+    /**
+     * Method to disassociate all the departments from a departments list
+     * @param departmentsList Departments list to disassociate
+     */
+    public void disassociateDepartmentsProject(LinkedList<Department> departmentsList) {
         for (Department department : departmentsList) {
             department.setAssociatedProject(null);
         }
     }
 
-    public void dissacociateEmployeesProject(LinkedList<Employee> employeesList) {
+    /**
+     * Method to disassociate all the employees from a departments list
+     * @param employeesList Employees list to disassociate
+     */
+    public void disassociateEmployeesProject(LinkedList<Employee> employeesList) {
         for (Employee employee : employeesList) {
             employee.setAssociatedProject(null);
         }
     }
 
+    /**
+     * Method to assign a project to a department
+     * @param project Project to assign
+     * @param department Department to get assigned with
+     */
     public void associateProjectDepartment(Project project, Department department) {
         if (department.getAssociatedProject() == null) {
             department.setAssociatedProject(project);
@@ -276,6 +341,11 @@ public class ManagementCompany implements IManageTechnician {
         }
     }
 
+    /**
+     * Method to disassociate a project from a department
+     * @param project Project to disassociate
+     * @param code Department to get disassociated with
+     */
     public void disassociateProjectDepartment(Project project, int code) {
         if (project.isCompleted()) {
             return;
@@ -288,21 +358,34 @@ public class ManagementCompany implements IManageTechnician {
         }
     }
 
+    /**
+     * Method to complete a project
+     * @param project Project to complete
+     */
     public void completeProject(Project project) {
         if (!project.isCompleted()) {
             project.setCompleted(true);
             completeManagersProject(project.getDepartmentsList());
-            dissacociateDepartmentsProject(project.getDepartmentsList());
-            dissacociateEmployeesProject(project.getAssignedEmployeesList());
+            disassociateDepartmentsProject(project.getDepartmentsList());
+            disassociateEmployeesProject(project.getAssignedEmployeesList());
         }
     }
 
+    /**
+     * Method to add one more project completed to the managers of the departments assigned
+     * @param departmentsList Departments list of the project
+     */
     private void completeManagersProject(LinkedList<Department> departmentsList) {
         for (Department department : departmentsList) {
             department.getManagerAssociated().changeNumberCompletedProjects(1);
         }
     }
 
+    /**
+     * Method to associate a technician to a project
+     * @param code Code of the project
+     * @param id ID of the technician
+     */
     @Override
     public void associateProjectTechnician(int code, String id) {
         Technician technician = findTechnician(id);
@@ -311,6 +394,11 @@ public class ManagementCompany implements IManageTechnician {
         }
     }
 
+    /**
+     * Method to disassociate a technician from a project
+     * @param code Code of the project
+     * @param id ID of the technician to disassociate
+     */
     @Override
     public void disassociateProjectTechnician(int code, String id) {
         Technician technician = findTechnician(id);
@@ -319,6 +407,11 @@ public class ManagementCompany implements IManageTechnician {
         }
     }
 
+    /**
+     * Method to find a technician by an ID given
+     * @param id ID of technician to find
+     * @return If the technician wasn't found returns null otherwise returns the technician
+     */
     public Technician findTechnician(String id) {
         for (Technician technician : techniciansList) {
             if (technician.getId().equals(id)) {
@@ -326,5 +419,37 @@ public class ManagementCompany implements IManageTechnician {
             }
         }
         return null;
+    }
+
+    /**
+     * Method to get the name of the department with most technicians
+     * @return The name of the department with most technicians
+     */
+    public String departmentMostTechnicians(){
+        int max = 0;
+        String departmentName = "";
+        for (Department department : departmentsList) {
+           if (department.getTechniciansList().size() > max){
+               max = department.getTechniciansList().size();
+               departmentName = department.getName();
+           }
+        }
+        return departmentName;
+    }
+
+    /**
+     * Method to get the name of the project with most employees
+     * @return The name of the project with most employees
+     */
+    public String projectMostEmployees(){
+        int max = 0;
+        String projectName = "";
+        for (Project project : projectsList) {
+            if (project.getAssignedEmployeesList().size() > max){
+                max = project.getAssignedEmployeesList().size();
+                projectName = project.getName();
+            }
+        }
+        return projectName;
     }
 }
