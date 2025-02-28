@@ -8,6 +8,7 @@ public class Main {
         ModelFactory modelFactory = ModelFactory.getInstance();
         ModelFactory.initializeData();
         ManagementCompany managementCompany = modelFactory.getManagementCompany();
-        System.out.println(managementCompany.getManagerList().size());
+        //System.out.println(managementCompany.currentProjectMostEmployees());
+        System.out.println(managementCompany.departmentMostTechnicians());
     }
 }

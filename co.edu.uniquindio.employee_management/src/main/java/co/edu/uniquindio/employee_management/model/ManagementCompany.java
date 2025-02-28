@@ -60,18 +60,34 @@ public class ManagementCompany implements IManageTechnician {
         this.departmentsList = departmentsList;
     }
 
+    /**
+     * Method to obtain the technicians list
+     * @return Technicians list
+     */
     public LinkedList<Technician> getTechniciansList() {
         return techniciansList;
     }
 
+    /**
+     * Method to modify the technicians list
+     * @param techniciansList New technicians list
+     */
     public void setTechniciansList(LinkedList<Technician> techniciansList) {
         this.techniciansList = techniciansList;
     }
 
+    /**
+     * Method to obtain the managers list
+     * @return Managers list
+     */
     public LinkedList<Manager> getManagerList() {
         return managerList;
     }
 
+    /**
+     * Method to modify the managers list
+     * @param managerList New managers list
+     */
     public void setManagerList(LinkedList<Manager> managerList) {
         this.managerList = managerList;
     }
@@ -157,6 +173,9 @@ public class ManagementCompany implements IManageTechnician {
         if (verifyEmployee(employee.getId())){
             return;
         }
+        if (!verifyDepartment(employee.getassociatedDepartment().getCode())) {
+            return;
+        }
         if (employee instanceof Manager manager) {
             addManager(manager);
         }
@@ -189,8 +208,7 @@ public class ManagementCompany implements IManageTechnician {
      * @param manager Manager to add
      */
     public void addManager(Manager manager) {
-        Department department = manager.getassociatedDepartment();
-        if (department != null && department.getManagerAssociated() == null) {
+        if (manager.getassociatedDepartment().getManagerAssociated() == null) {
             managerList.add(manager);
             manager.getassociatedDepartment().setManagerAssociated(manager);
         }
@@ -335,9 +353,14 @@ public class ManagementCompany implements IManageTechnician {
      * @param department Department to get assigned with
      */
     public void associateProjectDepartment(Project project, Department department) {
-        if (department.getAssociatedProject() == null) {
+        if (!verifyProjects(project.getCode())) {
+            return;
+        }
+        if (department.getAssociatedProject() == null && department.getManagerAssociated() != null) {
             department.setAssociatedProject(project);
             department.getManagerAssociated().setAssociatedProject(project);
+            project.getDepartmentsList().add(department);
+            project.getAssignedEmployeesList().add(department.getManagerAssociated());
         }
     }
 
@@ -363,7 +386,7 @@ public class ManagementCompany implements IManageTechnician {
      * @param project Project to complete
      */
     public void completeProject(Project project) {
-        if (!project.isCompleted()) {
+        if (!project.isCompleted() && verifyProjects(project.getCode())) {
             project.setCompleted(true);
             completeManagersProject(project.getDepartmentsList());
             disassociateDepartmentsProject(project.getDepartmentsList());
@@ -438,14 +461,14 @@ public class ManagementCompany implements IManageTechnician {
     }
 
     /**
-     * Method to get the name of the project with most employees
+     * Method to get the name of the current project with most employees
      * @return The name of the project with most employees
      */
-    public String projectMostEmployees(){
+    public String currentProjectMostEmployees(){
         int max = 0;
         String projectName = "";
         for (Project project : projectsList) {
-            if (project.getAssignedEmployeesList().size() > max){
+            if (project.getAssignedEmployeesList().size() > max && !project.isCompleted()) {
                 max = project.getAssignedEmployeesList().size();
                 projectName = project.getName();
             }
