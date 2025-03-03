@@ -8,7 +8,6 @@ public class Main {
         ModelFactory modelFactory = ModelFactory.getInstance();
         ModelFactory.initializeData();
         ManagementCompany managementCompany = modelFactory.getManagementCompany();
-        currentProjectsMostEmployees(modelFactory);
         departmentMostTechnicians(modelFactory);
     }
 
@@ -28,7 +27,7 @@ public class Main {
             System.out.println("No hay ningun departamento con técnicos");
         }
         else {
-            System.out.println("El departmento: " + departmentName + ", es el departmento con más técnicos");
+            System.out.println("El departamento: " + departmentName + ", es el departmento con más técnicos");
         }
     }
 }

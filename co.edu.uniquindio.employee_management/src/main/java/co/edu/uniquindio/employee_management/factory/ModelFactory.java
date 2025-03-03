@@ -40,26 +40,24 @@ public class ModelFactory {
      */
     public static void initializeData() {
         managementCompany = new ManagementCompany("UQ Software");
-        Department department = new Department("Bloque 1", 1);
+        Department department1 = new Department("Bloque 1", 1);
         Department department2 = new Department("Bloque 2", 2);
-        Technician technician = new Technician("Alejo", "20", department2);
-        Technician technician1 = new Technician("Sofi", "21", department2);
-        Manager manager = new Manager("Vero", "22", department);
-        Manager manager1 = new Manager("Salo", "23", department2);
-        Project project = new Project("Primero", 1);
-        Project project1 = new Project("Segundo", 2);
-        managementCompany.createDepartment(department);
+        Technician technician1 = new Technician("Alejo", "20", department2);
+        Technician technician2 = new Technician("Sofi", "21", department2);
+        Manager manager1 = new Manager("Vale", "22", department1);
+        Manager manager2 = new Manager("Carol", "23", department2);
+        Project project1 = new Project("Primero", 1);
+        Project project2 = new Project("Segundo", 2);
+        managementCompany.createDepartment(department1);
         managementCompany.createDepartment(department2);
-        managementCompany.addEmployee(technician);
         managementCompany.addEmployee(technician1);
-        managementCompany.addEmployee(manager);
+        managementCompany.addEmployee(technician2);
         managementCompany.addEmployee(manager1);
-        managementCompany.createProject(project);
+        managementCompany.addEmployee(manager2);
         managementCompany.createProject(project1);
-        managementCompany.associateProjectDepartment(project, department);
-        managementCompany.associateProjectDepartment(project1, department2);
-        managementCompany.associateProjectTechnician(2, "21");
-        //managementCompany.completeProject(project);
+        managementCompany.createProject(project2);
+        managementCompany.associateProjectDepartment(project1, department1);
+        managementCompany.completeProject(project1);
     }
 
     public void createDepartment(Department department){
