@@ -8,7 +8,27 @@ public class Main {
         ModelFactory modelFactory = ModelFactory.getInstance();
         ModelFactory.initializeData();
         ManagementCompany managementCompany = modelFactory.getManagementCompany();
-        //System.out.println(managementCompany.currentProjectMostEmployees());
-        System.out.println(managementCompany.departmentMostTechnicians());
+        currentProjectsMostEmployees(modelFactory);
+        departmentMostTechnicians(modelFactory);
+    }
+
+    public static void currentProjectsMostEmployees(ModelFactory modelFactory) {
+        String projectName = modelFactory.currentProjectMostEmployees();
+        if (projectName.isEmpty()) {
+            System.out.println("No hay ningún proyecto en proceso");
+        }
+        else {
+            System.out.println("El proyecto: " + projectName + ", es el proyecto con más empleados");
+        }
+    }
+
+    public static void departmentMostTechnicians(ModelFactory modelFactory) {
+        String departmentName = modelFactory.departmentMostTechnicians();
+        if (departmentName.isEmpty()) {
+            System.out.println("No hay ningun departamento con técnicos");
+        }
+        else {
+            System.out.println("El departmento: " + departmentName + ", es el departmento con más técnicos");
+        }
     }
 }
