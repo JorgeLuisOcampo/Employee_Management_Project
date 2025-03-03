@@ -16,6 +16,6 @@ public class Technician extends Employee{
      */
     @Override
     public void contribute() {
-        System.out.println("Contribute to Technician");
+        System.out.println("The technician " + getName() + " has been contributed to the project.");
     }
 }

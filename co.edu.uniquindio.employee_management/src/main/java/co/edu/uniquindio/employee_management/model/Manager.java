@@ -46,7 +46,7 @@ public class Manager extends Employee implements IManageTechnician {
      */
     @Override
     public void contribute() {
-        System.out.println("Contribute to Manager");
+        System.out.println("The manager " + getName() + " has been contributed to the project.");
     }
 
     /**
