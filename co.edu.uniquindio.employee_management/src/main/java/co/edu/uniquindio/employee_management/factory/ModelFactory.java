@@ -42,7 +42,7 @@ public class ModelFactory {
         managementCompany = new ManagementCompany("UQ Software");
         Department department1 = new Department("Bloque 1", 1);
         Department department2 = new Department("Bloque 2", 2);
-        Technician technician1 = new Technician("Alejo", "20", department2);
+        Technician technician1 = new Technician("Alejo", "20", department1);
         Technician technician2 = new Technician("Sofi", "21", department2);
         Manager manager1 = new Manager("Vale", "22", department1);
         Manager manager2 = new Manager("Carol", "23", department2);
@@ -57,7 +57,9 @@ public class ModelFactory {
         managementCompany.createProject(project1);
         managementCompany.createProject(project2);
         managementCompany.associateProjectDepartment(project1, department1);
-        managementCompany.completeProject(project1);
+        managementCompany.associateProjectDepartment(project2, department2);
+        managementCompany.associateProjectTechnician(2, "20");
+        //managementCompany.completeProject(project1);
     }
 
     public void createDepartment(Department department){
