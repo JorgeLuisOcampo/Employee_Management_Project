@@ -117,4 +117,12 @@ public class ModelFactory {
     public void disassociateProjectTechnician(int code, String id){
         managementCompany.disassociateProjectTechnician(code, id);
     }
+
+    public String departmentMostTechnicians(){
+        return managementCompany.departmentMostTechnicians();
+    }
+
+    public String currentProjectMostEmployees(){
+        return managementCompany.currentProjectMostEmployees();
+    }
 }
