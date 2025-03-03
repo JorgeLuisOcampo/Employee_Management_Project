@@ -56,7 +56,8 @@ public class Manager extends Employee implements IManageTechnician {
      */
     @Override
     public void associateProjectTechnician(int code, String id) {
-        if (code != getAssociatedProject().getCode() || getAssociatedProject().isCompleted()) {
+        if (getAssociatedProject() == null || getAssociatedProject().isCompleted()
+        || code != getAssociatedProject().getCode()) {
             return;
         }
         for (Technician technician : super.getassociatedDepartment().getTechniciansList()) {
@@ -75,7 +76,8 @@ public class Manager extends Employee implements IManageTechnician {
      */
     @Override
     public void disassociateProjectTechnician(int code, String id) {
-        if (code != getAssociatedProject().getCode() || getAssociatedProject().isCompleted()) {
+        if (getAssociatedProject() == null || code != getAssociatedProject().getCode()
+                || getAssociatedProject().isCompleted()) {
             return;
         }
         for (Technician technician : super.getassociatedDepartment().getTechniciansList()) {
