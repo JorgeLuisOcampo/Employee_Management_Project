@@ -69,12 +69,12 @@ public class ModelFactory implements IModelFactoryService {
         //managementCompany.completeProject(project1);
     }
 
-    public void createDepartment(Department department){
-        managementCompany.createDepartment(department);
+    public void createDepartment(DepartmentDto departmentDto){
+        managementCompany.createDepartment(departmentMapper.departmentDtoToDeparment(departmentDto));
     }
 
-    public void updateDepartment(int code, Department newDepartment){
-        managementCompany.updateDepartment(code, newDepartment);
+    public void updateDepartment(int code, DepartmentDto departmentDto){
+        managementCompany.updateDepartment(code, departmentMapper.departmentDtoToDeparment(departmentDto));
     }
 
     public void deleteDepartment(int code){
