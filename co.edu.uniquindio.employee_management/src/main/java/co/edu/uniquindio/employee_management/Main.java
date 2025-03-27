@@ -1,15 +1,22 @@
 package co.edu.uniquindio.employee_management;
 
 import co.edu.uniquindio.employee_management.factory.ModelFactory;
+import co.edu.uniquindio.employee_management.mapping.dto.DepartmentDto;
 import co.edu.uniquindio.employee_management.model.ManagementCompany;
+import co.edu.uniquindio.employee_management.model.Project;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         ModelFactory modelFactory = ModelFactory.getInstance();
-        ModelFactory.initializeData();
-        ManagementCompany managementCompany = modelFactory.getManagementCompany();
-        currentProjectsMostEmployees(modelFactory);
-        departmentMostTechnicians(modelFactory);
+        createDepartment(modelFactory);
+        System.out.println(modelFactory.getManagementCompany().getDepartmentsList().size());
+    }
+
+    public static void createDepartment(ModelFactory modelFactory) {
+        DepartmentDto departmentDto = new DepartmentDto("Bonice", 1, null, null, null);
+        modelFactory.createDepartment(departmentDto);
     }
 
     public static void currentProjectsMostEmployees(ModelFactory modelFactory) {
