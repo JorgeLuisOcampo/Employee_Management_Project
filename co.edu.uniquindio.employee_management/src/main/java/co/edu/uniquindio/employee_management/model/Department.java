@@ -9,6 +9,8 @@ public class Department {
     private Manager managerAssociated;
     private LinkedList<Technician> techniciansList;
 
+    public Department(){}
+
     /**
      * Method constructor for the class Department
      * @param name Name of the department to create

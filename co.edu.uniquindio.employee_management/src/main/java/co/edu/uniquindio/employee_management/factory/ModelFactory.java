@@ -1,18 +1,25 @@
 package co.edu.uniquindio.employee_management.factory;
 
+import co.edu.uniquindio.employee_management.mapping.dto.DepartmentDto;
+import co.edu.uniquindio.employee_management.mapping.mappers.DepartmentMappingImpl;
 import co.edu.uniquindio.employee_management.model.*;
+import co.edu.uniquindio.employee_management.services.IDepartmentMapping;
+import co.edu.uniquindio.employee_management.services.IModelFactoryService;
 
 import java.util.LinkedList;
+import java.util.List;
 
-public class ModelFactory {
+public class ModelFactory implements IModelFactoryService {
 
     private static ModelFactory modelFactory;
     private static ManagementCompany managementCompany;
+    private IDepartmentMapping departmentMapper;
 
     /**
      * Method constructor of the class ModelFactory
      */
     private ModelFactory() {
+        departmentMapper = new DepartmentMappingImpl();
         initializeData();
     }
 
@@ -124,5 +131,10 @@ public class ModelFactory {
 
     public String currentProjectMostEmployees(){
         return managementCompany.currentProjectMostEmployees();
+    }
+
+    @Override
+    public List<DepartmentDto> getDepartmentsDto() {
+        return departmentMapper.getDepartmentsDto(managementCompany.getDepartmentsList());
     }
 }
